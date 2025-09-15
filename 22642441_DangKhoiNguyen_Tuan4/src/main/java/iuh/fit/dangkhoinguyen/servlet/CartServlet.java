@@ -17,7 +17,7 @@ import java.io.IOException;
 @WebServlet("/cart")
 public class CartServlet extends HttpServlet {
     private ProductDao productDao;
-    @Resource(name = "jdbc/shopdb")
+    @Resource(name = "jdbc/bookdb")
     private DataSource dataSource;
 
     @Override
@@ -31,7 +31,7 @@ public class CartServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("cart.jsp").forward(req, resp);
+        req.getRequestDispatcher("view/giohang.jsp").forward(req, resp);
     }
 
     @Override

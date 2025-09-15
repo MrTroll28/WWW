@@ -10,16 +10,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46d00ccc-c4c1-4c5e-be89-f09818a800f9" name="Changes" comment="Start">
-      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen/src/main/java/iuh/fit/dangkhoinguyen/beans/CartBean.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen/src/main/java/iuh/fit/dangkhoinguyen/beans/CartItemBean.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen/src/main/java/iuh/fit/dangkhoinguyen/beans/Product.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen/src/main/java/iuh/fit/dangkhoinguyen/dao/ProductDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen/src/main/java/iuh/fit/dangkhoinguyen/servlet/CartServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen/src/main/java/iuh/fit/dangkhoinguyen/servlet/ProductServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen/src/main/java/iuh/fit/dangkhoinguyen/util/DBUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen/src/main/webapp/META-INF/context.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen/src/main/webapp/index.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen/src/main/webapp/product-list.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen/src/main/webapp/cart.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen/src/main/webapp/product-detail.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen_Tuan4/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen_Tuan4/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen_Tuan4/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen_Tuan4/src/main/java/iuh/fit/dangkhoinguyen/beans/CartBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen_Tuan4/src/main/java/iuh/fit/dangkhoinguyen/beans/CartItemBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen_Tuan4/src/main/java/iuh/fit/dangkhoinguyen/beans/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen_Tuan4/src/main/java/iuh/fit/dangkhoinguyen/dao/ProductDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen_Tuan4/src/main/java/iuh/fit/dangkhoinguyen/servlet/CartServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen_Tuan4/src/main/java/iuh/fit/dangkhoinguyen/servlet/ProductServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen_Tuan4/src/main/java/iuh/fit/dangkhoinguyen/util/DBUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen_Tuan4/src/main/webapp/META-INF/context.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen_Tuan4/src/main/webapp/product-list.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../22642441_DangKhoiNguyen/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../22642441_DangKhoiNguyen/src/main/java/iuh/fit/dangkhoinguyen/servlet/ProductServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen/src/main/java/iuh/fit/dangkhoinguyen/servlet/ProductServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../22642441_DangKhoiNguyen/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen/src/main/webapp/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../22642441_DangKhoiNguyen/src/main/webapp/product-list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../22642441_DangKhoiNguyen/src/main/webapp/product-list.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -212,6 +222,8 @@
       <workItem from="1757893768145" duration="282000" />
       <workItem from="1757894353184" duration="3657000" />
       <workItem from="1757902447367" duration="71000" />
+      <workItem from="1757910039481" duration="838000" />
+      <workItem from="1757915103631" duration="949000" />
     </task>
     <task id="LOCAL-00001" summary="Start">
       <option name="closed" value="true" />

@@ -7,6 +7,6 @@
 <body>
 <h1><%= "Hello World!" %></h1>
 <br/>
-<a href="product-list.jsp">Product List</a>
+<a href="products">Product List</a>
 </body>
 </html>
