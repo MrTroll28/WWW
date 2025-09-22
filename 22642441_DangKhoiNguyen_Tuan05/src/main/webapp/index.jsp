@@ -13,5 +13,9 @@
 <a href="employees">Employee Management</a>
 <br/>
 <a href="departments">Department Management</a>
+<br/>
+<a href="tintuc">Quản lý tin tức</a>
+<br/>
+<a href="danhmuc">Quản lý danh mục</a>
 </body>
 </html>
