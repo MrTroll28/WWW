@@ -16,8 +16,4 @@ public interface DepartmentRepository extends JpaRepository<Department, Long> {
     // Lấy tất cả department có số lượng nhân viên > minSize
     @Query("SELECT d FROM Department d WHERE SIZE(d.employees) > :minSize")
     List<Department> findDepartmentsWithMoreEmployees(@Param("minSize") int minSize);
-
-    // Get all departments với danh sách employees (fetch join để tránh lazy loading)
-    @Query("SELECT DISTINCT d FROM Department d LEFT JOIN FETCH d.employees")
-    List<Department> findAllWithEmployees();
 }

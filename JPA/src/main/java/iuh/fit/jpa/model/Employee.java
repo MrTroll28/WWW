@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Employee {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "emp_id")
     private Long empId;
     private LocalDate dob;

@@ -19,6 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class Department {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dept_id")
     private Long deptId;
     @Column(name = "dept_name")

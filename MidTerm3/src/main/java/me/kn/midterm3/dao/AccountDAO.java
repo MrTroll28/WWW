@@ -72,11 +72,11 @@ public class AccountDAO {
         try {
             String jpql = """
                     SELECT a FROM Account a
-                    WHERE a.ownerAddress LIKE concat("%", :address, "%") 
+                    WHERE lower(a.ownerAddress) LIKE concat("%", :address, "%") 
                     """;
 
             TypedQuery<Account> query = em.createQuery(jpql, Account.class);
-            query.setParameter("address", address);
+            query.setParameter("address", address.toLowerCase());
 
             return query.getResultList();
         } catch (Exception e) {

@@ -9,10 +9,6 @@ import java.util.List;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-    // Tìm employee theo id
-    @Query("SELECT e FROM Employee e WHERE e.empId = :empId")
-    Employee findByEmpId(@Param("empId") Long empId);
-
     // Tìm danh sách employee theo tên
     @Query("SELECT e FROM Employee e WHERE e.empName = :empName")
     List<Employee> findByEmpName(@Param("empName") String empName);
