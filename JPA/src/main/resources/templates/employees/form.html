@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${employee.empId != null} ? 'Edit Employee' : 'Add Employee'">Employee Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">Company Manager</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" th:href="@{/departments}">Departments</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/employees}">Employees</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <h2 th:text="${employee.empId != null} ? 'Edit Employee' : 'Add Employee'"></h2>
+    <form th:action="${employee.empId != null} ? @{'/employees/' + ${employee.empId}} : @{/employees}"
+          method="post" th:object="${employee}">
+        <div class="mb-3">
+            <label for="empName" class="form-label">Name</label>
+            <input type="text" class="form-control" id="empName" th:field="*{empName}" placeholder="Enter name" required>
+        </div>
+        <div class="mb-3">
+            <label for="dob" class="form-label">Date of Birth</label>
+            <input type="date" class="form-control" id="dob" th:field="*{dob}" required>
+        </div>
+        <div class="mb-3">
+            <label for="salary" class="form-label">Salary</label>
+            <input type="number" step="0.01" class="form-control" id="salary" th:field="*{salary}" required>
+        </div>
+        <div class="mb-3">
+            <label for="dept" class="form-label">Department</label>
+            <select id="dept" class="form-select" th:field="*{department.deptId}" required>
+                <option value="" th:if="${employee.department == null}" disabled selected>Select department</option>
+                <option th:each="dept : ${departments}"
+                        th:value="${dept.deptId}"
+                        th:text="${dept.deptName}"
+                        th:selected="${employee.department != null} ? ${dept.deptId} == ${employee.department.deptId} : false">
+                </option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Save</button>
+        <a th:href="@{/employees}" class="btn btn-secondary">Back</a>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

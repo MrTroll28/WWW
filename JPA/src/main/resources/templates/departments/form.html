@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${department.deptId != null} ? 'Edit Department' : 'Add Department'">Department Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- navbar giống trang index -->
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">Company Manager</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" th:href="@{/departments}">Departments</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/employees}">Employees</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <h2 th:text="${department.deptId != null} ? 'Edit Department' : 'Add Department'"></h2>
+    <form th:action="${department.deptId != null} ? @{'/departments/' + ${department.deptId}} : @{/departments}"
+          method="post" th:object="${department}">
+        <div class="mb-3">
+            <label for="deptName" class="form-label">Department Name</label>
+            <input type="text" class="form-control" id="deptName" th:field="*{deptName}"
+                   placeholder="Enter department name" required>
+        </div>
+        <button type="submit" class="btn btn-success">Save</button>
+        <a th:href="@{/departments}" class="btn btn-secondary">Back</a>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
