@@ -5,6 +5,7 @@ import me.kn.ecommerce.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,11 +18,31 @@ public class CustomerService {
         return customerRepository.findById(id);
     }
 
+    public List<Customer> findAll() {
+        return customerRepository.findAll();
+    }
+
     public Customer findByEmail(String email) {
         return customerRepository.findByEmail(email);
     }
 
+    public List<Customer> search(String keyword) {
+        if (keyword == null || keyword.isBlank()) {
+            return findAll();
+        }
+        return customerRepository
+                .findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrPhoneContainingIgnoreCase(
+                        keyword,
+                        keyword,
+                        keyword,
+                        keyword);
+    }
+
     public Customer save(Customer customer) {
         return customerRepository.save(customer);
+    }
+
+    public void deleteById(Long id) {
+        customerRepository.deleteById(id);
     }
 }
