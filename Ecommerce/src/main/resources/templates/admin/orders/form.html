@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tạo hóa đơn</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
+</head>
+<body class="container py-4">
+<h1 class="mb-4">Tạo hóa đơn mới</h1>
+<form th:action="@{/admin/orders}" method="post" class="row g-3">
+    <div class="col-md-6">
+        <label class="form-label">Khách hàng</label>
+        <select class="form-select" name="customerId" required>
+            <option value="">-- Chọn khách hàng --</option>
+            <option th:each="customer : ${customers}" th:value="${customer.id}" th:text="${customer.firstName + ' ' + customer.lastName + ' - ' + customer.email}"></option>
+        </select>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Trạng thái</label>
+        <input class="form-control" name="status" value="PENDING">
+    </div>
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Tạo hóa đơn</button>
+        <a class="btn btn-secondary" th:href="@{/admin/orders}">Hủy</a>
+    </div>
+</form>
+</body>
+</html>

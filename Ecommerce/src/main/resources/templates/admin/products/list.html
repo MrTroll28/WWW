@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý sản phẩm</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
+</head>
+<body class="container py-4">
+<h1 class="mb-4">Quản lý sản phẩm</h1>
+<div class="mb-3 d-flex justify-content-between">
+    <form class="d-flex" method="get">
+        <input class="form-control me-2" type="search" placeholder="Tìm theo tên" name="keyword" th:value="${keyword}">
+        <button class="btn btn-outline-primary" type="submit">Tìm kiếm</button>
+    </form>
+    <a class="btn btn-primary" th:href="@{/admin/products/new}">Thêm sản phẩm</a>
+</div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Tên</th>
+        <th>Giá</th>
+        <th>Tồn kho</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.id}"></td>
+        <td th:text="${product.name}"></td>
+        <td th:text="${#numbers.formatDecimal(product.price, 1, 'POINT', 2, 'POINT')}"></td>
+        <td th:text="${product.stock}"></td>
+        <td class="text-end">
+            <a class="btn btn-sm btn-secondary" th:href="@{|/admin/products/${product.id}/edit|}">Sửa</a>
+            <form th:action="@{|/admin/products/${product.id}/delete|}" method="post" class="d-inline">
+                <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('Xóa sản phẩm này?');">Xóa</button>
+            </form>
+        </td>
+    </tr>
+    <tr th:if="${products.isEmpty()}">
+        <td colspan="5" class="text-center">Không có sản phẩm nào</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

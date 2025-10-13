@@ -18,12 +18,23 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public List<Product> searchByName(String keyword) {
+        if (keyword == null || keyword.isBlank()) {
+            return findAll();
+        }
+        return productRepository.findByNameContainingIgnoreCase(keyword);
+    }
+
     public Optional<Product> findById(Long id) {
         return productRepository.findById(id);
     }
 
     public Product save(Product product) {
         return productRepository.save(product);
+    }
+
+    public void deleteById(Long id) {
+        productRepository.deleteById(id);
     }
 
     public void decreaseStock(Product product, int quantity) {

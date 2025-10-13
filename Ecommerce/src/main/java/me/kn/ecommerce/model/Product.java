@@ -3,16 +3,15 @@ package me.kn.ecommerce.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Product entity represents an item that can be purchased.  It includes
  * descriptive attributes such as name, description and price as well as
- * inventory count.  Products have a one‑to‑many relationship with order lines
- * (each product can appear on multiple orders) and with comments
- * (customers can leave feedback for a product)【877306590398801†L100-L109】.
+ * inventory count. Products have a one‑to‑many relationship with order lines
+ * (each product can appear on multiple orders) and with comments (customers
+ * can leave feedback for a product).
  */
 @Entity
 @Table(name = "products")

@@ -7,7 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -41,5 +45,40 @@ public class OrderService {
 
     public List<Order> getOrders(Customer customer) {
         return orderRepository.findByCustomer(customer);
+    }
+
+    public List<Order> findAll() {
+        return orderRepository.findAll();
+    }
+
+    public Optional<Order> findById(Long id) {
+        return orderRepository.findById(id);
+    }
+
+    public Order save(Order order) {
+        return orderRepository.save(order);
+    }
+
+    public void deleteById(Long id) {
+        orderRepository.deleteById(id);
+    }
+
+    public List<Order> search(String keyword) {
+        if (keyword == null || keyword.isBlank()) {
+            return findAll();
+        }
+        String trimmed = keyword.trim();
+        Set<Order> matches = new LinkedHashSet<>();
+        try {
+            Long orderId = Long.parseLong(trimmed);
+            orderRepository.findById(orderId).ifPresent(matches::add);
+        } catch (NumberFormatException ignored) {
+            // Ignore non-numeric values when searching by ID
+        }
+        matches.addAll(orderRepository
+                .findByCustomer_EmailContainingIgnoreCaseOrStatusContainingIgnoreCase(trimmed, trimmed));
+        matches.addAll(orderRepository
+                .findByCustomer_FirstNameContainingIgnoreCaseOrCustomer_LastNameContainingIgnoreCase(trimmed, trimmed));
+        return new ArrayList<>(matches);
     }
 }

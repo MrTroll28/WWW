@@ -7,4 +7,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
     Customer findByEmail(String email);
+
+    java.util.List<Customer> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrPhoneContainingIgnoreCase(
+            String firstName,
+            String lastName,
+            String email,
+            String phone);
+
 }
