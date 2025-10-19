@@ -1,5 +1,6 @@
 package me.kn.ecommerce.config;
 
+import me.kn.ecommerce.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,12 +14,23 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, UserService userService) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/webjars/**", "/css/**", "/js/**", "/images/**").permitAll()
-                        .anyRequest().permitAll()
+                        .requestMatchers("/", "/register", "/login", "/products/**", "/api/products/**", "/api/auth/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
                 )
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .loginProcessingUrl("/login")
+                        .defaultSuccessUrl("/", false)
+                        .failureUrl("/login?error")
+                        .permitAll()
+                )
+                .logout(logout -> logout.logoutSuccessUrl("/").permitAll())
+                .userDetailsService(userService)
                 .csrf(csrf -> csrf.disable());
         return http.build();
     }

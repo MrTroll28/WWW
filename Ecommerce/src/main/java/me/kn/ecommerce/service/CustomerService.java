@@ -26,6 +26,10 @@ public class CustomerService {
         return customerRepository.findByEmail(email);
     }
 
+    public boolean emailExists(String email) {
+        return email != null && customerRepository.existsByEmail(email);
+    }
+
     public List<Customer> search(String keyword) {
         if (keyword == null || keyword.isBlank()) {
             return findAll();

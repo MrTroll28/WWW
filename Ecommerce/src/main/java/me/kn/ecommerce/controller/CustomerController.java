@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,13 +27,30 @@ public class CustomerController {
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute Customer customer, @ModelAttribute User user) {
-        // Persist customer first
+        public String register(@ModelAttribute("customer") Customer customer,
+                @ModelAttribute("user") User user,
+                Model model,
+                RedirectAttributes redirectAttributes) {
+        if (userService.usernameExists(user.getUsername())) {
+            model.addAttribute("errorMessage", "Tên đăng nhập đã tồn tại.");
+            model.addAttribute("customer", customer);
+            model.addAttribute("user", user);
+            return "register";
+        }
+
+        if (customer.getEmail() != null && customerService.emailExists(customer.getEmail())) {
+            model.addAttribute("errorMessage", "Email đã được sử dụng.");
+            model.addAttribute("customer", customer);
+            model.addAttribute("user", user);
+            return "register";
+        }
+
         Customer savedCustomer = customerService.save(customer);
-        // Link user to customer and set default role
         user.setCustomer(savedCustomer);
         user.setRole("ROLE_USER");
         userService.register(user);
+
+        redirectAttributes.addFlashAttribute("successMessage", "Đăng ký thành công. Vui lòng đăng nhập.");
         return "redirect:/login";
     }
 }

@@ -24,9 +24,27 @@
     </div>
 </nav>
 
-<div class="container mt-4">
-    <h1>Login</h1>
-    <p>Tạm thời chưa hiện thực.</p>
+<div class="container mt-4" style="max-width: 480px;">
+    <h1 class="mb-4 text-center">Đăng nhập</h1>
+
+    <div th:if="${errorMessage}" class="alert alert-danger" role="alert" th:text="${errorMessage}"></div>
+    <div th:if="${successMessage}" class="alert alert-success" role="alert" th:text="${successMessage}"></div>
+
+    <form th:action="@{/login}" method="post" novalidate>
+        <div class="mb-3">
+            <label for="username" class="form-label">Tên đăng nhập</label>
+            <input type="text" class="form-control" id="username" name="username" required autofocus>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Mật khẩu</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+            <button type="submit" class="btn btn-primary">Đăng nhập</button>
+            <a class="btn btn-link" th:href="@{/register}">Chưa có tài khoản? Đăng ký</a>
+        </div>
+    </form>
 </div>
+
 </body>
 </html>
