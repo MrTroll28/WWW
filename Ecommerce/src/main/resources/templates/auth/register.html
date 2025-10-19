@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="content">
+    <div class="container" style="max-width: 450px;">
+        <h3 class="text-center mb-4">Đăng ký tài khoản</h3>
+        <form th:action="@{/auth/register}" method="post" th:object="${form}">
+            <div class="mb-3">
+                <label class="form-label">Họ và tên</label>
+                <input type="text" class="form-control" th:field="*{fullName}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Tên đăng nhập</label>
+                <input type="text" class="form-control" th:field="*{username}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Mật khẩu</label>
+                <input type="password" class="form-control" th:field="*{password}" required>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Đăng ký</button>
+        </form>
+        <p class="text-center mt-3">
+            <a th:href="@{/auth/login}">Đã có tài khoản? Đăng nhập</a>
+        </p>
+        <p th:if="${error}" class="text-danger text-center" th:text="${error}"></p>
+        <p th:if="${msg}" class="text-success text-center" th:text="${msg}"></p>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<body>
+<div th:fragment="content">
+    <h3>Giỏ hàng của bạn</h3>
+
+    <!-- ✅ Không còn dùng #lists -->
+    <table class="table" th:if="${cartItems != null and !cartItems.isEmpty()}">
+        <thead>
+        <tr>
+            <th>Sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Giá</th>
+            <th>Tổng</th>
+            <th>Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="it : ${cartItems}">
+            <td th:text="${it.product.name}"></td>
+            <td>
+                <form th:action="@{/cart/update}" method="post" class="d-flex">
+                    <input type="hidden" name="productId" th:value="${it.product.id}">
+                    <input type="number" name="quantity" th:value="${it.quantity}" min="1"
+                           class="form-control form-control-sm me-2" style="width:80px;">
+                    <button class="btn btn-sm btn-outline-success">Cập nhật</button>
+                </form>
+            </td>
+            <td th:text="${#numbers.formatDecimal(it.product.price,1,'POINT',2,'NONE')} + ' ₫'"></td>
+            <td th:text="${#numbers.formatDecimal(it.product.price * it.quantity,1,'POINT',2,'NONE')} + ' ₫'"></td>
+            <td>
+                <form th:action="@{/cart/remove}" method="post">
+                    <input type="hidden" name="productId" th:value="${it.product.id}">
+                    <button class="btn btn-sm btn-outline-danger">Xóa</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p th:if="${cartItems == null or cartItems.isEmpty()}" class="text-center mt-3">Giỏ hàng trống.</p>
+
+    <div class="text-end mt-3" th:if="${cartItems != null and !cartItems.isEmpty()}">
+        <p class="fw-bold">Tổng cộng:
+            <span th:text="${#numbers.formatDecimal(cart.total,1,0)} + ' ₫'"></span>
+        </p>
+        <a href="/checkout" class="btn btn-primary">Thanh toán</a>
+    </div>
+</div>
+</body>
+</html>

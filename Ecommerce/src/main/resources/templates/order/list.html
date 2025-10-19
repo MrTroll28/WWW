@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="content">
+    <h3>Danh sách đơn hàng</h3>
+
+    <table class="table table-striped" th:if="${orders != null and !orders.isEmpty()}">
+        <thead>
+        <tr>
+            <th>Mã đơn</th>
+            <th>Khách hàng</th>
+            <th>Ngày đặt</th>
+            <th>Tổng tiền</th>
+            <th>Trạng thái</th>
+            <th>Chi tiết</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="o : ${orders}">
+            <td th:text="${o.id}"></td>
+            <td th:text="${o.customer.name}"></td>
+            <td th:text="${#temporals.format(o.orderDate, 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="${#numbers.formatDecimal(o.total,1,0)} + ' ₫'"></td>
+            <td th:text="${o.status}"></td>
+            <td>
+                <a th:href="@{'/order/' + ${o.id}}" class="btn btn-sm btn-outline-primary">Xem</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p th:if="${orders == null or orders.isEmpty()}" class="text-center mt-3 text-muted">
+        Không có đơn hàng nào.
+    </p>
+</div>
+</body>
+</html>

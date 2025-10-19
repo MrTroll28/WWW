@@ -1,28 +1,35 @@
 package me.kn.ecommerce.service;
 
-import lombok.RequiredArgsConstructor;
-import me.kn.ecommerce.model.Customer;
-import me.kn.ecommerce.model.User;
-import me.kn.ecommerce.repository.CustomerRepository;
-import me.kn.ecommerce.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import me.kn.ecommerce.model.Customer;
+import me.kn.ecommerce.model.User;
+import me.kn.ecommerce.repo.CustomerRepository;
+import me.kn.ecommerce.repo.UserRepository;
 
 @Service
-@RequiredArgsConstructor
 public class AuthService {
-    private final UserRepository userRepository;
-    private final CustomerRepository customerRepository;
-    private final PasswordEncoder passwordEncoder;
-    @Transactional
-    public void register(Customer customer, String username, String password) {
-        User user = User.builder().username(username)
-                .password(passwordEncoder.encode(password))
-                .role("CUSTOMER").build();
-        userRepository.save(user);
-        customer.setUser(user);
-        customerRepository.save(customer);
+    private final UserRepository userRepo;
+    private final CustomerRepository customerRepo;
+    private final PasswordEncoder encoder;
+
+    public AuthService(UserRepository u, CustomerRepository c, PasswordEncoder e) {
+        this.userRepo = u; this.customerRepo = c; this.encoder = e;
     }
-    public User findByUsername(String username) { return userRepository.findByUsername(username); }
+
+    @Transactional
+    public User registerCustomer(String username, String rawPassword, String fullName) {
+        if (userRepo.existsByUsername(username)) throw new IllegalArgumentException("Username already exists");
+        Customer customer = new Customer();
+        customer.setName(fullName);
+        customerRepo.save(customer);
+
+        User u = new User();
+        u.setUsername(username);
+        u.setPassword(encoder.encode(rawPassword));
+        u.setRole("CUSTOMER");
+        u.setCustomer(customer);
+        return userRepo.save(u);
+    }
 }

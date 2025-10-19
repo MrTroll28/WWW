@@ -1,23 +1,22 @@
 package me.kn.ecommerce.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartItem {
 
-    private Long productId;
-
-    private String productName;
-
-    private double price;
-
+    private Product product;
     private int quantity;
 
-    public double getTotal() {
-        return price * quantity;
+    /** Tổng tiền của sản phẩm này */
+    public double getLineTotal() {
+        if (product == null) return 0.0;
+        return product.getPrice() * quantity;
     }
 }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="content">
+    <h3 th:text="*{id} ? 'Cập nhật sản phẩm' : 'Thêm sản phẩm mới'"></h3>
+    <form th:action="@{/products/admin/save}" method="post" th:object="${p}">
+        <input type="hidden" th:field="*{id}">
+        <div class="mb-3">
+            <label class="form-label">Tên sản phẩm</label>
+            <input class="form-control" th:field="*{name}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Mô tả</label>
+            <textarea class="form-control" th:field="*{description}"></textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Giá</label>
+            <input type="number" class="form-control" th:field="*{price}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Số lượng tồn</label>
+            <input type="number" class="form-control" th:field="*{stock}" required>
+        </div>
+        <button class="btn btn-success">Lưu</button>
+        <a href="/products" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>
+</body>
+</html>

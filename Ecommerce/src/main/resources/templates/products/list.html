@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="content">
+    <h3>Danh sách sản phẩm</h3>
+    <form method="get" action="/products" class="d-flex mb-3">
+        <input type="text" name="q" th:value="${q}" placeholder="Tìm kiếm..." class="form-control me-2">
+        <button class="btn btn-outline-primary">Tìm</button>
+    </form>
+
+    <div class="row" th:if="${!#lists.isEmpty(products)}">
+        <div class="col-md-3 mb-4" th:each="p : ${products}">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 th:text="${p.name}"></h5>
+                    <p th:text="${p.description}"></p>
+                    <p class="fw-bold" th:text="${#numbers.formatDecimal(p.price,1,0)} + ' ₫'"></p>
+
+                    <div class="d-grid gap-2">
+                        <!-- Nút thêm vào giỏ -->
+                        <form th:action="@{/cart/add}" method="post">
+                            <input type="hidden" name="productId" th:value="${p.id}">
+                            <button class="btn btn-sm btn-success w-100">Thêm vào giỏ</button>
+                        </form>
+
+                        <!-- Nút xem chi tiết -->
+                        <a th:href="@{/products/{id}(id=${p.id})}" class="btn btn-sm btn-outline-secondary w-100">
+                            Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p th:if="${#lists.isEmpty(products)}" class="text-center mt-4">Không có sản phẩm nào.</p>
+</div>
+</body>
+</html>

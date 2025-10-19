@@ -1,55 +1,50 @@
 package me.kn.ecommerce.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class Cart {
 
-    private Map<Long, CartItem> items = new LinkedHashMap<>();
+    // Map: key = productId, value = CartItem
+    private Map<Long, CartItem> items = new HashMap<>();
 
-    public void addItem(CartItem item) {
-        if (items.containsKey(item.getProductId())) {
-            CartItem existing = items.get(item.getProductId());
-            existing.setQuantity(existing.getQuantity() + item.getQuantity());
+    /** Thêm sản phẩm vào giỏ hàng */
+    public void add(Product product, int quantity) {
+        if (quantity <= 0) quantity = 1;
+
+        CartItem existing = items.get(product.getId());
+        if (existing != null) {
+            existing.setQuantity(existing.getQuantity() + quantity);
         } else {
-            items.put(item.getProductId(), item);
+            items.put(product.getId(), new CartItem(product, quantity));
         }
     }
 
-    public void updateQuantity(Long productId, int quantity) {
-        if (!items.containsKey(productId)) {
-            return;
-        }
-        if (quantity <= 0) {
-            items.remove(productId);
-        } else {
-            items.get(productId).setQuantity(quantity);
-        }
-    }
-
-    public void removeItem(Long productId) {
+    /** Xoá sản phẩm khỏi giỏ hàng */
+    public void remove(Long productId) {
         items.remove(productId);
     }
 
-    public double getTotalPrice() {
+    /** Tính tổng tiền */
+    public double getTotal() {
         return items.values().stream()
-                .mapToDouble(CartItem::getTotal)
+                .mapToDouble(CartItem::getLineTotal)
                 .sum();
     }
 
-    public void clear() {
-        items.clear();
+    /** Trả về danh sách CartItem để dễ duyệt bằng foreach */
+    public Collection<CartItem> getItemsList() {
+        return items.values();
     }
 
+    /** Kiểm tra giỏ hàng rỗng */
     public boolean isEmpty() {
         return items.isEmpty();
-    }
-
-    public Collection<CartItem> getAllItems() {
-        return items.values();
     }
 }

@@ -1,0 +1,1 @@
+INSERT INTO PRODUCT (id, name, description, price, stock) VALUES (1,'Áo thun','Áo thun cotton 100%',120000,100),(2,'Quần jean','Quần jean co giãn',350000,50),(3,'Giày thể thao','Giày chạy bộ siêu nhẹ',750000,35);
