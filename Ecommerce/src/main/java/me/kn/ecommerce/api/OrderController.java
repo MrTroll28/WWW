@@ -24,6 +24,15 @@ public class OrderController {
     private final OrderService orderService;
     private final CustomerRepository customerRepo;
     private final UserRepository userRepo;
+    private Cart getCart(HttpSession session) {
+        Cart c = (Cart) session.getAttribute("cart");
+        if (c == null) {
+            c = new Cart();
+            session.setAttribute("cart", c);
+        }
+        return c;
+    }
+
 
     @GetMapping("/list")
     public String listOrders(Principal principal, Model model) {
@@ -83,21 +92,30 @@ public class OrderController {
 
 
     @GetMapping("/checkout")
-    public String checkout(Model model) {
-        model.addAttribute("title", "Thanh toán");
-        model.addAttribute("content", "order/checkout");
-        return "_layout";
-    }
-
-    // ✅ Đặt hàng
-    @PostMapping("/checkout")
-    public String placeOrder(HttpSession session, Principal principal, Model model) {
+    public String checkout(HttpSession session, Model model) {
         Cart cart = (Cart) session.getAttribute("cart");
         if (cart == null || cart.getItems().isEmpty()) {
             return "redirect:/cart/view";
         }
 
-        Customer customer = customerRepo.findByUser_Username(principal.getName())
+        model.addAttribute("cart", cart);
+        model.addAttribute("cartItems", new java.util.ArrayList<>(cart.getItems().values()));
+        model.addAttribute("title", "Xác nhận thanh toán");
+        model.addAttribute("content", "order/checkout");
+        return "_layout";
+    }
+
+
+    @PostMapping("/checkout")
+    public String placeOrder(HttpSession session, Principal principal, Model model) {
+        Cart cart = getCart(session);
+        if (cart.getItems().isEmpty()) {
+            return "redirect:/cart/view";
+        }
+
+        if (principal == null) return "redirect:/auth/login";
+
+        var customer = customerRepo.findByUser_Username(principal.getName())
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
 
         orderService.placeOrder(customer, cart);
@@ -107,4 +125,5 @@ public class OrderController {
         model.addAttribute("content", "order/summary");
         return "_layout";
     }
+
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Project List</title>
+</head>
+<body>
+
+<h1>Project List</h1>
+
+<a th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
+   th:href="@{/projects/add}">
+    + Add new
+</a>
+
+<a th:href="@{/logout}">
+    Logout
+</a>
+
+<table border="1" width="80%">
+    <tr>
+        <th>ID</th><th>Name</th><th>Description</th><th>Actions</th>
+    </tr>
+
+    <tr th:each="p : ${projects}">
+        <td th:text="${p.id}"></td>
+        <td th:text="${p.name}"></td>
+        <td th:text="${p.description}"></td>
+        <td th:text="${p.startDate}"></td>
+        <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+            <a th:href="@{'/projects/edit/' + ${p.id}}">Edit</a>
+
+            <a th:href="@{'/projects/delete/' + ${p.id}}">Delete</a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
