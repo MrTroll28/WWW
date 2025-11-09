@@ -3,8 +3,10 @@
 <body>
 <div th:fragment="content">
     <h3>Giỏ hàng của bạn</h3>
-
-    <!-- ✅ Không còn dùng #lists -->
+    <!-- Flash messages   -->
+    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+    <div th:if="${warning}" class="alert alert-warning" th:text="${warning}"></div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
     <table class="table" th:if="${cartItems != null and !cartItems.isEmpty()}">
         <thead>
         <tr>

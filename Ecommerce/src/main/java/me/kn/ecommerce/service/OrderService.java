@@ -1,54 +1,62 @@
 package me.kn.ecommerce.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import lombok.RequiredArgsConstructor;
+import me.kn.ecommerce.repo.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import me.kn.ecommerce.model.*;
 import me.kn.ecommerce.repo.OrderRepository;
 
 @Service
+@RequiredArgsConstructor
 public class OrderService {
+    private final ProductRepository productRepo;
     private final OrderRepository orderRepo;
 
-    public OrderService(OrderRepository orderRepo) {
-        this.orderRepo = orderRepo;
-    }
-
-    /**
-     * Tạo đơn hàng mới dựa vào giỏ hàng trong session.
-     * - Sao chép từng CartItem thành OrderLine.
-     * - Gắn Customer, thời gian đặt hàng.
-     * - Tính tổng giá trị đơn.
-     */
     @Transactional
-    public Order placeOrder(Customer customer, Cart cart) {
-        if (cart == null || cart.isEmpty()) {
-            throw new IllegalStateException("Giỏ hàng trống, không thể tạo đơn hàng.");
+    public void placeOrder(Customer customer, Cart cart) {
+        for (var item : cart.getItems().values()) {
+            Product p = item.getProduct();             // Product có trường stock
+            int stock = p.getStock();
+
+            if (item.getQuantity() > stock) {
+                throw new RuntimeException(
+                        "Sản phẩm '" + p.getName() +
+                                "' chỉ còn " + stock + " sản phẩm!"
+                );
+            }
+        }
+
+        for (var item : cart.getItems().values()) {
+            Product p = item.getProduct();
+            p.setStock(p.getStock() - item.getQuantity());
+            productRepo.save(p);                       // productRepo hỗ trợ save
         }
 
         Order order = new Order();
         order.setCustomer(customer);
-
-        // Nếu entity Order của bạn có trường orderDate
         order.setOrderDate(LocalDateTime.now());
+        order.setStatus("PENDING");
 
-        double total = 0.0;
+        List<OrderLine> orderLines = new ArrayList<>();
 
-        // Duyệt các sản phẩm trong giỏ (Map<Long, CartItem>)
-        for (CartItem item : cart.getItemsList()) {
+        for (var item : cart.getItems().values()) {
+
             OrderLine line = new OrderLine();
             line.setOrder(order);
             line.setProduct(item.getProduct());
             line.setQuantity(item.getQuantity());
             line.setPrice(item.getProduct().getPrice());
 
-            // thêm dòng vào danh sách OrderLine của Order
-            order.getOrderLines().add(line);
+            orderLines.add(line);
         }
-        return orderRepo.save(order);
+        order.setOrderLines(orderLines);
+        orderRepo.save(order);
     }
 
     public List<Order> findAll() {

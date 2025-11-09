@@ -15,15 +15,26 @@ public class Cart {
     private Map<Long, CartItem> items = new HashMap<>();
 
     /** Thêm sản phẩm vào giỏ hàng */
-    public void add(Product product, int quantity) {
+    public int add(Product product, int quantity) {
         if (quantity <= 0) quantity = 1;
 
+        int stock = product.getStock();
         CartItem existing = items.get(product.getId());
-        if (existing != null) {
-            existing.setQuantity(existing.getQuantity() + quantity);
-        } else {
-            items.put(product.getId(), new CartItem(product, quantity));
+        int currentQty = existing != null ? existing.getQuantity() : 0;
+
+        int canAdd = Math.min(quantity, stock - currentQty);
+
+        if (canAdd <= 0) {
+            return 0; // không thêm được
         }
+
+        if (existing != null) {
+            existing.setQuantity(currentQty + canAdd);
+        } else {
+            items.put(product.getId(), new CartItem(product, canAdd));
+        }
+
+        return canAdd;   // ✅ trả về số lượng thực sự đã thêm
     }
 
     /** Xoá sản phẩm khỏi giỏ hàng */
