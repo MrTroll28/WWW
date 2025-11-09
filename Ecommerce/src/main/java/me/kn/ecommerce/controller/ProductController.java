@@ -1,4 +1,4 @@
-package me.kn.ecommerce.api;
+package me.kn.ecommerce.controller;
 
 import java.util.List;
 
@@ -31,6 +31,7 @@ public class ProductController {
 
         return "products/list";
     }
+
 
     @GetMapping("/{id}")
     public String detail(@PathVariable Long id, Model model) {

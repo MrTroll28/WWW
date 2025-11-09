@@ -1,4 +1,4 @@
-package me.kn.ecommerce.api;
+package me.kn.ecommerce.controller;
 
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.stereotype.Controller;

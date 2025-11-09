@@ -1,14 +1,12 @@
-package me.kn.ecommerce.api;
+package me.kn.ecommerce.controller;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import me.kn.ecommerce.model.Cart;
-import me.kn.ecommerce.model.Customer;
 import me.kn.ecommerce.model.Order;
 import me.kn.ecommerce.repo.CustomerRepository;
 import me.kn.ecommerce.repo.UserRepository;
 import me.kn.ecommerce.service.OrderService;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

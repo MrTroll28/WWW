@@ -8,15 +8,11 @@
 <h1>Project</h1>
 
 <form th:action="@{/projects/save}" th:object="${project}" method="post">
-
     <input type="hidden" th:field="*{id}"/>
-
     Name: <input th:field="*{name}"/> <br/>
     Description: <input th:field="*{description}"/> <br/>
     Start time: <input th:field="*{startDate}" type="date"/> <br/>
-
     <button type="submit">Save</button>
-
 </form>
 
 <a href="/projects">Back</a>

@@ -35,6 +35,7 @@ public class SecurityConfig {
                 .build();
         return new InMemoryUserDetailsManager(member,admin);
     }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity

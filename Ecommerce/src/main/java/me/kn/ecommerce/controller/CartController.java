@@ -1,4 +1,4 @@
-package me.kn.ecommerce.api;
+package me.kn.ecommerce.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import me.kn.ecommerce.model.Cart;
 import me.kn.ecommerce.model.Product;
 import me.kn.ecommerce.service.ProductService;
-
-import java.util.Collections;
 
 @Controller
 @RequestMapping("/cart")
