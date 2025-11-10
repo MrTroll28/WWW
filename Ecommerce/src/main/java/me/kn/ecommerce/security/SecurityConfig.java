@@ -35,14 +35,18 @@ public class SecurityConfig {
     SecurityFilterChain filter(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/", "/products/**", "/auth/**", "/cart/**",
-                                "/h2/**", "/css/**", "/js/**", "/img/**").permitAll()
+                        .requestMatchers(
+                                "/", "/products/**", "/cart/**",
+                                "/auth/**",
+                                "/h2/**", "/css/**", "/js/**", "/img/**",
+                                "/error", "/error/**"
+                        ).permitAll()
                         .requestMatchers("/products/admin/**", "/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/auth/login")
-                        .loginProcessingUrl("/auth/login")
+                        // .loginProcessingUrl("/auth/login")
                         .defaultSuccessUrl("/", true)
                         .failureUrl("/auth/login?error=true")
                         .permitAll()

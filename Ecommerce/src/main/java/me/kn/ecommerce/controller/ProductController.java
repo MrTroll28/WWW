@@ -2,6 +2,7 @@ package me.kn.ecommerce.controller;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import me.kn.ecommerce.model.Product;
 import me.kn.ecommerce.repo.ProductRepository;
@@ -9,6 +10,7 @@ import me.kn.ecommerce.service.ProductService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -54,13 +56,22 @@ public class ProductController {
     @GetMapping("/admin/new")
     public String createForm(Model model) {
         model.addAttribute("p", new Product());
-        model.addAttribute("title", "Thêm sản phẩm mới");
+        model.addAttribute( "title", "Thêm sản phẩm mới");
         return "products/form";
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin/save")
-    public String save(@ModelAttribute Product p) {
+    public String save(
+            @Valid @ModelAttribute("p") Product p,
+            BindingResult result,
+            Model model
+    ) {
+        if (result.hasErrors()) {
+            model.addAttribute("title", p.getId() == null ? "Thêm sản phẩm" : "Sửa sản phẩm");
+            return "products/form";
+        }
+
         service.save(p);
         return "redirect:/products";
     }

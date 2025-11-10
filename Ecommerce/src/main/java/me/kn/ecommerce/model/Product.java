@@ -1,6 +1,7 @@
 package me.kn.ecommerce.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -24,13 +25,22 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Tên sản phẩm không được để trống")
+    @Pattern(
+            regexp = "^[A-Z][A-Za-z]{1,}$",
+            message = "Tên sản phẩm phải bắt đầu là chữ in hoa, ít nhất là 2 ký tự"
+    )
     private String name;
 
     @Column(length = 2000)
+    @NotBlank(message = "Mô tả sản phẩm không được để trống")
     private String description;
 
+    @NotNull(message = "Giá không được để trống")
+    @Positive(message = "Giá phải > 0")
     private double price;
 
+    @Min(value = 0, message = "Tồn kho không được < 0")
     private int stock;
 
     @OneToMany(mappedBy = "product")

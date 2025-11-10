@@ -4,26 +4,66 @@
 <div th:fragment="content">
     <div class="container" style="max-width: 450px;">
         <h3 class="text-center mb-4">Đăng ký tài khoản</h3>
+
         <form th:action="@{/auth/register}" method="post" th:object="${form}">
+            <!-- Fix lỗi CSRF fail → redirect login  -->
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+            <!-- Full name -->
             <div class="mb-3">
                 <label class="form-label">Họ và tên</label>
-                <input type="text" class="form-control" th:field="*{fullName}" required>
+                <input type="text" class="form-control" th:field="*{fullName}">
+                <small class="text-danger" th:errors="*{fullName}"></small>
             </div>
+
+            <!-- Username -->
             <div class="mb-3">
                 <label class="form-label">Tên đăng nhập</label>
-                <input type="text" class="form-control" th:field="*{username}" required>
+                <input type="text" class="form-control" th:field="*{username}">
+                <small class="text-danger" th:errors="*{username}"></small>
             </div>
+
+            <!-- Password -->
             <div class="mb-3">
                 <label class="form-label">Mật khẩu</label>
-                <input type="password" class="form-control" th:field="*{password}" required>
+                <input type="password" class="form-control" th:field="*{password}">
+                <small class="text-danger" th:errors="*{password}"></small>
             </div>
-            <button type="submit" class="btn btn-success w-100">Đăng ký</button>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" th:field="*{email}">
+                <small class="text-danger" th:errors="*{email}"></small>
+            </div>
+
+            <!-- Phone -->
+            <div class="mb-3">
+                <label class="form-label">Số điện thoại</label>
+                <input type="text" class="form-control" th:field="*{phone}">
+                <small class="text-danger" th:errors="*{phone}"></small>
+            </div>
+
+            <!-- Address -->
+            <div class="mb-3">
+                <label class="form-label">Địa chỉ</label>
+                <input type="text" class="form-control" th:field="*{address}">
+                <small class="text-danger" th:errors="*{address}"></small>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">
+                Đăng ký
+            </button>
         </form>
+
+        <!-- Flash messages -->
+        <p th:if="${error}" class="text-danger text-center" th:text="${error}"></p>
+        <p th:if="${msg}" class="text-success text-center" th:text="${msg}"></p>
+
         <p class="text-center mt-3">
             <a th:href="@{/auth/login}">Đã có tài khoản? Đăng nhập</a>
         </p>
-        <p th:if="${error}" class="text-danger text-center" th:text="${error}"></p>
-        <p th:if="${msg}" class="text-success text-center" th:text="${msg}"></p>
+
     </div>
 </div>
 </body>

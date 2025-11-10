@@ -19,17 +19,40 @@ public class AuthService {
     }
 
     @Transactional
-    public User registerCustomer(String username, String rawPassword, String fullName) {
-        if (userRepo.existsByUsername(username)) throw new IllegalArgumentException("Username already exists");
+    public User registerCustomer(
+            String username,
+            String rawPassword,
+            String fullName,
+            String email,
+            String phone,
+            String address
+    ) {
+
+        if (userRepo.existsByUsername(username)) {
+            throw new IllegalArgumentException("Tên đăng nhập đã tồn tại");
+        }
+
+        if (customerRepo.existsByEmail(email)) {
+            throw new IllegalArgumentException("Email đã tồn tại");
+        }
+
+        if (customerRepo.existsByPhone(phone)) {
+            throw new IllegalArgumentException("Số điện thoại đã tồn tại");
+        }
+
         Customer customer = new Customer();
         customer.setName(fullName);
+        customer.setEmail(email);
+        customer.setPhone(phone);
+        customer.setAddress(address);
         customerRepo.save(customer);
 
-        User u = new User();
-        u.setUsername(username);
-        u.setPassword(encoder.encode(rawPassword));
-        u.setRole("CUSTOMER");
-        u.setCustomer(customer);
-        return userRepo.save(u);
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(encoder.encode(rawPassword));
+        user.setRole("CUSTOMER");
+        user.setCustomer(customer);
+
+        return userRepo.save(user);
     }
 }

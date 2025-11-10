@@ -19,6 +19,7 @@ public class LayoutInterceptor implements HandlerInterceptor {
         String viewName = modelAndView.getViewName();
 
         if (viewName == null
+                || viewName.startsWith("auth/")
                 || viewName.startsWith("redirect:")
                 || viewName.equals("_layout")
                 || viewName.equals("error")) {
