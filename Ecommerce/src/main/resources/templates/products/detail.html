@@ -31,6 +31,10 @@
         <form th:action="@{|/products/${p.id}/comment|}" method="post">
             <textarea class="form-control mb-2" name="content" rows="2" placeholder="Viết bình luận..." required></textarea>
             <button class="btn btn-outline-primary">Gửi bình luận</button>
+
+            <div th:if="${error}" class="alert alert-danger">
+                <span th:text="${error}"></span>
+            </div>
         </form>
     </div>
 </div>
